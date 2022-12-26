@@ -1,0 +1,21 @@
+<p>annuite!</p>
+<!-- <app-form-input></app-form-input> -->
+
+<form #myform="ngForm" (submit)="onSubmit(myform)">
+  <mat-form-field appearance="fill">
+    <mat-label>Capital</mat-label>
+    <input matInput name="c" ngModel>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Duree</mat-label>
+    <input matInput name="d" ngModel>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Taux</mat-label>
+    <input matInput name="t" ngModel>
+  </mat-form-field>
+  <input class="btn" type="submit" value="Calculer"/>
+  <input class="btn" type="submit" value="Sauvegarder"/>
+</form>
+
+<h2>{{annuiteResult}}</h2>

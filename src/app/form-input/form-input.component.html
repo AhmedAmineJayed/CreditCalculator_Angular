@@ -1,0 +1,16 @@
+<p>form-input works!</p>
+  <form #myform="ngForm" (submit)="onSubmit(myform)">
+  <mat-form-field appearance="fill">
+    <mat-label>Capital</mat-label>
+    <input matInput name="Capital" ngModel>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Taux</mat-label>
+    <input matInput name="Taux" ngModel>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Duree</mat-label>
+    <input matInput name="Duree" ngModel>
+  </mat-form-field>
+  <input class="btn" type="submit" value="Calculer & Sauvegarder"/>
+</form>
