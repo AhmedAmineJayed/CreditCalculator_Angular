@@ -7,25 +7,25 @@ import { Router } from '@angular/router';
 export interface PeriodicElement{
   NumCli: number;
   NumCre: number;
-  DateCred: String;
-  MontCred: number;
-  DureeCred: number;
-  TauxCred: number;
+  DatCred: String;
+  MonCre: number;
+  DurCre: number;
+  TauCre: number;
   AnnCred: number;
 }
 
 const ELEMENT_DATA : PeriodicElement[] = [
-  {NumCli:1, NumCre: 1, DateCred: '2/2/2012', MontCred: 1.0079, DureeCred: 10, TauxCred:20,AnnCred:70},
-  {NumCli:2, NumCre: 1, DateCred: '2/2/2012', MontCred: 1.0079, DureeCred: 10, TauxCred:20,AnnCred:70},
-  {NumCli:2, NumCre: 1, DateCred: '2/2/2012', MontCred: 1.0079, DureeCred: 10, TauxCred:20,AnnCred:70},
-  {NumCli:2, NumCre: 1, DateCred: '2/2/2012', MontCred: 1.0079, DureeCred: 10, TauxCred:20,AnnCred:70},
-  {NumCli:2, NumCre: 1, DateCred: '2/2/2012', MontCred: 1.0079, DureeCred: 10, TauxCred:20,AnnCred:70},
-  {NumCli:2, NumCre: 1, DateCred: '2/2/2012', MontCred: 1.0079, DureeCred: 10, TauxCred:20,AnnCred:70},
-  {NumCli:2, NumCre: 1, DateCred: '2/2/2012', MontCred: 1.0079, DureeCred: 10, TauxCred:20,AnnCred:70},
-  {NumCli:2, NumCre: 1, DateCred: '2/2/2012', MontCred: 1.0079, DureeCred: 10, TauxCred:20,AnnCred:70},
-  {NumCli:2, NumCre: 1, DateCred: '2/2/2012', MontCred: 1.0079, DureeCred: 10, TauxCred:20,AnnCred:70},
-  {NumCli:2, NumCre: 1, DateCred: '2/2/2012', MontCred: 1.0079, DureeCred: 10, TauxCred:20,AnnCred:70},
-  {NumCli:2, NumCre: 1, DateCred: '2/2/2012', MontCred: 1.0079, DureeCred: 10, TauxCred:20,AnnCred:70},
+  {NumCli:1, NumCre: 1, DatCred: '2/2/2012', MonCre: 1.0079, DurCre: 10, TauCre:20,AnnCred:70},
+  {NumCli:2, NumCre: 1, DatCred: '2/2/2012', MonCre: 1.0079, DurCre: 10, TauCre:20,AnnCred:70},
+  {NumCli:2, NumCre: 1, DatCred: '2/2/2012', MonCre: 1.0079, DurCre: 10, TauCre:20,AnnCred:70},
+  {NumCli:2, NumCre: 1, DatCred: '2/2/2012', MonCre: 1.0079, DurCre: 10, TauCre:20,AnnCred:70},
+  {NumCli:2, NumCre: 1, DatCred: '2/2/2012', MonCre: 1.0079, DurCre: 10, TauCre:20,AnnCred:70},
+  {NumCli:2, NumCre: 1, DatCred: '2/2/2012', MonCre: 1.0079, DurCre: 10, TauCre:20,AnnCred:70},
+  {NumCli:2, NumCre: 1, DatCred: '2/2/2012', MonCre: 1.0079, DurCre: 10, TauCre:20,AnnCred:70},
+  {NumCli:2, NumCre: 1, DatCred: '2/2/2012', MonCre: 1.0079, DurCre: 10, TauCre:20,AnnCred:70},
+  {NumCli:2, NumCre: 1, DatCred: '2/2/2012', MonCre: 1.0079, DurCre: 10, TauCre:20,AnnCred:70},
+  {NumCli:2, NumCre: 1, DatCred: '2/2/2012', MonCre: 1.0079, DurCre: 10, TauCre:20,AnnCred:70},
+  {NumCli:2, NumCre: 1, DatCred: '2/2/2012', MonCre: 1.0079, DurCre: 10, TauCre:20,AnnCred:70},
 ];
 
 @Component({
@@ -35,28 +35,54 @@ const ELEMENT_DATA : PeriodicElement[] = [
 })
 export class TableComponent{
 
+  isLogin: boolean = false
+  errorMessage: any
+  username: any = {}
+  data:PeriodicElement[] = []
+  userData: any={}
+  
   constructor(private _api: ApiService, 
     private _auth: AuthService, 
     private _router:Router) { }
 
-  ngOnInit(): void{
-    this.fetchData(localStorage.getItem("username"))
+  async ngOnInit(){
+   this.isUserLogin();
+   console.log(this.isLogin)
+    this._api.postTypeRequest('client/table',{}, this.username).subscribe((res: any) => {
+        // console.log(res.data)
+        console.log(ELEMENT_DATA)
+        this.data = res.data
+        console.log(this.data)
+    });
+
+    // const result : any = await this._api.postTypeRequest('client/table', {}, this.username).toPromise()
+    // this.data = result.data
+    // console.log(result.data)
+
   }
 
-  fetchData(username:any){
-    this._api.postTypeRequest('user/table', username).subscribe((res: any) => {
-      console.log("request sent", username.toString())
-     
-      if (res.status) { 
-       console.log("Table result" ,res)
-      }else{
-        console.log("No result")
+  isUserLogin(){
+      this.userData = this._auth.getUserDetails()
+      if(this.userData != null){
+          this.isLogin = true;
+          this.username = this._auth.getUsername()
       }
-    })
+    }
 
-  }
+  // fetchData(username:any){
+  //   this._api.postTypeRequest('client/table', username).subscribe((res: any) => {
+  //     console.log("request sent", username.toString())
+     
+  //     if (res.status) { 
+  //      console.log("Table result" ,res)
+  //     }else{
+  //       console.log("No result")
+  //     }
+  //   })
 
-  displayedColumns : string[] = ['NumCli', 'NumCre', 'DateCred', 'MontCred', 'DureeCred', 'TauxCred', 'AnnCred'];
-  dataSource = ELEMENT_DATA;
+  // }
+
+  displayedColumns : string[] = ['NumCli', 'NumCre', 'DatCred', 'MonCre', 'DurCre', 'TauCre', 'AnnCred'];
+  dataSource = this.data;
 
 }

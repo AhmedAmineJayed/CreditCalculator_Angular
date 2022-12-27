@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -12,12 +12,17 @@ export class ApiService {
   baseUrl = 'http://localhost:5000/';
   constructor(private _http: HttpClient) {
   }
-  getTypeRequest(url:any) {
-    return this._http.get(`${this.baseUrl}${url}`).pipe(map(res => {
+  getTypeRequest(url:any, username?:any) {
+      console.log("API Service Get Username:"+ username)
+      console.log(typeof(username))
+      const obj = JSON.parse(username)
+      let queryParams = new HttpParams()
+      queryParams = queryParams.append("username", username)
+    return this._http.get(`${this.baseUrl}${url}`, {params:queryParams}).pipe(map(res => {
       return res;
     }));
   }
-  postTypeRequest(url:any, payload:any, username?:any) {
+  postTypeRequest(url:any, payload?:any, username?:any) {
     let bod = JSON.stringify(payload)
 
     let httpOptions = {
