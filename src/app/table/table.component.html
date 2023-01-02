@@ -1,47 +1,24 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-  
-    <!-- Position Column -->
-    <ng-container matColumnDef="NumCli">
-      <th mat-header-cell *matHeaderCellDef> NumCli </th>
-      <td mat-cell *matCellDef="let element"> {{element.NumCli}} </td>
-    </ng-container>
-  
-    <!-- Name Column -->
-    <ng-container matColumnDef="NumCre">
-      <th mat-header-cell *matHeaderCellDef> NumCre </th>
-      <td mat-cell *matCellDef="let element"> {{element.NumCre}} </td>
-    </ng-container>
-  
-    <!-- Weight Column -->
-    <ng-container matColumnDef="DatCred">
-      <th mat-header-cell *matHeaderCellDef> DateCred </th>
-      <td mat-cell *matCellDef="let element"> {{element.DatCred}} </td>
-    </ng-container>
-  
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="MonCre">
-      <th mat-header-cell *matHeaderCellDef> MontCred </th>
-      <td mat-cell *matCellDef="let element"> {{element.MonCre}} </td>
-    </ng-container>
- 
-    <ng-container matColumnDef="DurCre">
-      <th mat-header-cell *matHeaderCellDef> DureeCred </th>
-      <td mat-cell *matCellDef="let element"> {{element.DurCre}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="TauCre">
-      <th mat-header-cell *matHeaderCellDef> TauxCred </th>
-      <td mat-cell *matCellDef="let element"> {{element.TauCre}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="AnnCred">
-      <th mat-header-cell *matHeaderCellDef> AnnCred </th>
-      <td mat-cell *matCellDef="let element"> {{element.AnnCred}} </td>
-    </ng-container>
-    
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">NumCli</th>
+      <th scope="col">NumCre</th>
+      <th scope="col">DatCre</th>
+      <th scope="col">MonCre</th>
+      <th scope="col">DurCre</th>
+      <th scope="col">TauxCre</th>
+      <th scope="col">AnnCred</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data">
+      <td >{{item.NumCli}}</td>
+      <td >{{item.NumCre}}</td>
+      <td >{{item.DatCred}}</td>
+      <td >{{item.MonCre}}</td>
+      <td >{{item.DurCre}}</td>
+      <td >{{item.TauCre}}</td>
+      <td >{{item.AnnCred}}</td>
+    </tr>
+  </tbody>
+</table>
