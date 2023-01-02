@@ -6,7 +6,7 @@
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Password</mat-label>
-    <input matInput name="password" ngModel>
+    <input matInput name="password" type="password" ngModel>
   </mat-form-field>
   <input class="btn" type="submit" value="Login"/>
   <button class="btn" *ngIf="this.isLogin" (click)="logout()">LogOut</button>
